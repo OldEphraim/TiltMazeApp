@@ -1,7 +1,7 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { Text, StyleSheet, Pressable } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
-import { RootStackParamList } from "../types/navigation"; // adjust path as needed
+import { RootStackParamList } from "../types/navigation";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Intro'>;
 

@@ -25,8 +25,8 @@ export default function MazeScreen() {
   const route = useRoute<MazeRouteProp>();
   const difficulty = route.params?.difficulty || 5;
 
-  const level = Math.floor((difficulty - 3) / 2) + 1;
-
+  const level = Math.floor((difficulty - 3) / 2);
+  
   const [maze, setMaze] = useState<number[][]>([]);
   const [playerPos, setPlayerPos] = useState({ x: 0, y: 0 });
   const [countdown, setCountdown] = useState(3);
@@ -82,29 +82,32 @@ export default function MazeScreen() {
     Accelerometer.setUpdateInterval(100);
     const sub = Accelerometer.addListener(({ x, y }) => {
       if (countdown > 0) return;
-
+  
       const now = Date.now();
       if (now - lastMove.current < 150) return;
-
+  
       let dx = 0;
       let dy = 0;
-
-      // More sensitive threshold
-      if (x > 0.2) dx = 1;
-      else if (x < -0.2) dx = -1;
-
-      if (y < -0.2) dy = 1;
-      else if (y > 0.2) dy = -1;
-
-      if (dx !== 0 || dy !== 0) {
+  
+      // 🔥 Max sensitivity with diagonal filtering
+      const absX = Math.abs(x);
+      const absY = Math.abs(y);
+      const threshold = 0.01;
+  
+      if (absX > threshold || absY > threshold) {
+        if (absX > absY) {
+          dx = x > 0 ? 1 : -1;
+        } else {
+          dy = y < 0 ? 1 : -1; // forward tilt = down
+        }
         tryMove(dx, dy);
         lastMove.current = now;
       }
     });
-
+  
     return () => sub.remove();
   }, [playerPos, maze, countdown]);
-
+  
   const tryMove = (dx: number, dy: number) => {
     const newX = playerPos.x + dx;
     const newY = playerPos.y + dy;

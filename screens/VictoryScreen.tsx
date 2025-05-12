@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import {
-  View,
   Text,
   StyleSheet,
   Pressable,
@@ -15,7 +14,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "Victory">;
 
 export default function VictoryScreen({ route, navigation }: Props) {
   const difficulty = route.params?.difficulty || 5;
-  const level = Math.floor((difficulty - 3) / 2) + 1;
+  const level = Math.floor((difficulty - 3) / 2);
 
   const secondsElapsed = route.params?.time ?? 5 * level + 2;
 
@@ -37,7 +36,7 @@ export default function VictoryScreen({ route, navigation }: Props) {
   const handleShare = async () => {
     try {
       await Share.share({
-        message: `I just beat Level ${level} in ${secondsElapsed}s in Tilt Maze!`,
+        message: `I just beat Level ${level} in ${secondsElapsed}s in Alan Garber's Tilt Maze! You should hire him to be an iOS Developer!`,
       });
     } catch (error) {
       console.error("Share failed:", error);
@@ -76,6 +75,7 @@ const styles = StyleSheet.create({
   messageBox: {
     alignItems: "center",
     padding: 30,
+    marginHorizontal: 20,
     backgroundColor: "rgba(255, 255, 255, 0.1)",
     borderRadius: 20,
     shadowColor: "#0ff",
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     shadowOffset: { width: 0, height: 0 },
   },
-  title: {
+    title: {
     fontSize: 48,
     color: "#00ffcc",
     fontWeight: "bold",
