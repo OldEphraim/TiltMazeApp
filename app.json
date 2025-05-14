@@ -17,7 +17,8 @@
       "bundleIdentifier": "com.oldephraim.tiltmaze",
       "buildNumber": "1.0.0",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "UISupportedInterfaceOrientations": ["UIInterfaceOrientationPortrait"]
       }
     },
     "android": {
